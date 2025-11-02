@@ -1,0 +1,142 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+canvas {
+  display: block;
+}
+
+/* Side hidden menu */
+.side-menu {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 260px;
+  transform: translateX(-100%);
+  transition: transform 350ms ease;
+  background: rgba(8, 18, 25, 0.95);
+  color: #fff;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  box-shadow: 2px 0 12px rgba(0,0,0,0.5);
+}
+.side-menu.open {
+  transform: translateX(0);
+}
+.side-menu .menu-list {
+  list-style: none;
+  padding: 22px;
+  margin: 0;
+  width: 100%;
+}
+.side-menu .menu-list li {
+  margin: 16px 0;
+}
+.side-menu .menu-list a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 32px;
+  line-height: 1;
+  display: inline-block;
+}
+
+/* Make sure canvas doesn't cover click area when menu is open */
+.side-menu.open ~ canvas {
+  pointer-events: none;
+}
+
+/* IFrame modal styles */
+.iframe-modal {
+  position: fixed;
+  inset: 0;
+  display: none; /* become flex when open */
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+.iframe-modal.open {
+  display: flex;
+}
+.iframe-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+}
+.iframe-container {
+  position: relative;
+  width: 70vw; /* 70% of viewport width */
+  height: 85vh; /* 85% of viewport height */
+  max-width: 1200px;
+  max-height: 1000px;
+  background: #fff;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  z-index: 10001;
+}
+.iframe-container iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+.iframe-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  z-index: 10002;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  border: none;
+  width: 36px;
+  height: 36px;
+  font-size: 20px;
+  line-height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Loader and error message inside modal */
+.iframe-loader {
+  position: absolute;
+  z-index: 10003;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 16px;
+  display: none;
+}
+.iframe-modal.open .iframe-loader {
+  display: block;
+}
+.iframe-err {
+  position: absolute;
+  z-index: 10003;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  background: rgba(255,255,255,0.95);
+  color: #111;
+  padding: 10px 14px;
+  border-radius: 4px;
+  font-size: 14px;
+  display: none;
+}
+.iframe-err[hidden] { display: none; }
+.iframe-err:not([hidden]) { display: block; }
+
+@media (max-width: 640px) {
+  .iframe-container {
+    width: 92vw;
+    height: 88vh;
+    border-radius: 4px;
+  }
+  .side-menu .menu-list a { font-size: 26px; }
+}
